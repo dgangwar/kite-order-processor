@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
+import com.processor.kiteorderprocessor.model.Order;
 
 @Service
 public class ConsumerService {
@@ -13,8 +13,8 @@ public class ConsumerService {
 
 
     @KafkaListener(topics = {"${spring.kafka.order-topic}"}, containerFactory = "kafkaListenerJsonFactory", groupId = "${spring.kafka.consumer.group_id}")
-    public void consumeOrder(String message) {
-        logger.info("**** -> Consumed message :: {}", message);
+    public void consumeOrder(Order order) {
+        logger.info("**** -> Consumed order :: {} , {}", order.getOrderId(), order.getStrategyName());
     }
 
 }
